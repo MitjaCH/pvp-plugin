@@ -73,18 +73,6 @@ public class SidebarCommand implements CommandExecutor, TabCompleter {
 
         int index = 15;
 
-        // Title Header
-        Score header = objective.getScore(ChatColor.DARK_GREEN.toString() + ChatColor.BOLD + "Teams and Kills");
-        header.setScore(index--);
-
-        // Teams and Kills
-        for (Team team : Bukkit.getScoreboardManager().getMainScoreboard().getTeams()) {
-            String teamName = team.getName();
-            int kills = teamKills.getOrDefault(teamName, 0);
-            Score score = objective.getScore(team.getColor() + teamName + ": " + ChatColor.WHITE + kills + " kills");
-            score.setScore(index--);
-        }
-
         // Spacing
         Score separator1 = objective.getScore(ChatColor.GRAY + "---------------");
         separator1.setScore(index--);
@@ -119,10 +107,6 @@ public class SidebarCommand implements CommandExecutor, TabCompleter {
         // Player Count
         Score playerCount = objective.getScore(ChatColor.GREEN + "Online Players: " + ChatColor.WHITE + Bukkit.getOnlinePlayers().size());
         playerCount.setScore(index--);
-
-        // More Information
-        Score serverMOTD = objective.getScore(ChatColor.GOLD + "MOTD: " + ChatColor.WHITE + Bukkit.getMotd());
-        serverMOTD.setScore(index--);
 
         // More Spacing
         Score separator3 = objective.getScore(ChatColor.GRAY + "---------------");
