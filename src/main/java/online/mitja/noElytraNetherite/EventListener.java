@@ -1,13 +1,16 @@
 package online.mitja.noElytraNetherite;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -57,6 +60,23 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        event.getPlayer().sendMessage("Welcome to the server! Elytra and Netherite items are disabled.");
+        Player player = event.getPlayer();
+        player.sendMessage("Welcome to the server! Elytra and Netherite items are disabled.");
+        updatePlayerTeamDisplay(player);
+    }
+
+    private void updatePlayerTeamDisplay(Player player) {
+        Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+        Team team = scoreboard.getEntryTeam(player.getName());
+
+        if (team != null) {
+            String teamName = team.getName();
+            String displayName = team.getColor() + "[" + teamName + "] " + player.getName();
+
+            player.setDisplayName(displayName);
+            player.setPlayerListName(displayName);
+            player.setCustomName(displayName);
+            player.setCustomNameVisible(true);
+        }
     }
 }

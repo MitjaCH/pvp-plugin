@@ -28,6 +28,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new EventListener(webhookUrl), this);
         getServer().getPluginManager().registerEvents(new TimeBasedEvents(webhookUrl), this);
         getServer().getPluginManager().registerEvents(this, this);
+        getServer().getPluginManager().registerEvents(new PlayerEventListener(), this);
 
         sidebarCommand = new SidebarCommand(this);
         if (this.getCommand("sb") != null) {
