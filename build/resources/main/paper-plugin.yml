@@ -5,5 +5,4 @@ api-version: 1.21
 commands:
   sb:
     description: Toggle sidebar display
-    usage: /sb <on|off>
-    aliases: [sidebar]
+    usage: /sb <on/off>

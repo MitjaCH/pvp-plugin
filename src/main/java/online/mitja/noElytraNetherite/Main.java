@@ -22,8 +22,9 @@ public class Main extends JavaPlugin implements Listener {
             this.saveConfig();
         }
 
-        String webhookUrl = "YOUR_DISCORD_WEBHOOK_URL";
+        String webhookUrl = "YOUR_WEBHOOK_URL";
 
+        getLogger().info("Webhook URL: " + webhookUrl);
         getServer().getPluginManager().registerEvents(new EventListener(webhookUrl), this);
         getServer().getPluginManager().registerEvents(new TimeBasedEvents(webhookUrl), this);
         getServer().getPluginManager().registerEvents(this, this);
