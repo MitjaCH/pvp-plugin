@@ -1,6 +1,7 @@
 package online.mitja.noElytraNetherite;
 
 import online.mitja.noElytraNetherite.commands.SidebarCommand;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -13,7 +14,7 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        getLogger().info("ElytraNetheriteLock has been enabled!");
+        getLogger().info("NoElytraNetherite has been enabled!");
 
         this.saveDefaultConfig();
         if (this.getConfig().getLong("startTime") == 0) {
@@ -21,15 +22,19 @@ public class Main extends JavaPlugin implements Listener {
             this.saveConfig();
         }
 
-        String webhookUrl = "WEBHOOK URL";
+        String webhookUrl = "YOUR_DISCORD_WEBHOOK_URL";
 
         getServer().getPluginManager().registerEvents(new EventListener(webhookUrl), this);
         getServer().getPluginManager().registerEvents(new TimeBasedEvents(webhookUrl), this);
         getServer().getPluginManager().registerEvents(this, this);
 
         sidebarCommand = new SidebarCommand(this);
-        this.getCommand("sb").setExecutor(sidebarCommand);
-        this.getCommand("sb").setTabCompleter(sidebarCommand);
+        if (this.getCommand("sb") != null) {
+            this.getCommand("sb").setExecutor(sidebarCommand);
+            this.getCommand("sb").setTabCompleter(sidebarCommand);
+        } else {
+            getLogger().severe("Failed to register /sb command. Check plugin.yml configuration.");
+        }
 
         new BukkitRunnable() {
             @Override
@@ -41,7 +46,7 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        getLogger().info("ElytraNetheriteLock has been disabled.");
+        getLogger().info("NoElytraNetherite has been disabled.");
     }
 
     @EventHandler

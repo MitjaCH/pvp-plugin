@@ -1,7 +1,7 @@
 name: NoElytraNetherite
-version: '1.0-SNAPSHOT'
+version: 1.0
 main: online.mitja.noElytraNetherite.Main
-api-version: '1.21'
+api-version: 1.21
 commands:
   sb:
     description: Toggle sidebar display
