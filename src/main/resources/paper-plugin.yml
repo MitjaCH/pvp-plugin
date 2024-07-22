@@ -1,6 +1,6 @@
 name: NoElytraNetherite
 version: '1.0-SNAPSHOT'
-main: online.mitja.noElytraNetherite.NoElytraNetherite
+main: online.mitja.noElytraNetherite.Main
 api-version: '1.21'
 commands:
   sb:
