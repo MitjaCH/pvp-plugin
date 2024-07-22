@@ -68,16 +68,22 @@ public class SidebarCommand implements CommandExecutor, TabCompleter {
     private void showSidebar(Player player) {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
         Scoreboard board = manager.getNewScoreboard();
-        Objective objective = board.registerNewObjective("sidebar", "dummy", ChatColor.GOLD + "Teams and Kills");
+        Objective objective = board.registerNewObjective("sidebar", "dummy", ChatColor.GOLD + "§l§nServer Info");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
-        int index = Bukkit.getScoreboardManager().getMainScoreboard().getTeams().size();
+        Score header = objective.getScore(ChatColor.DARK_GREEN.toString() + ChatColor.BOLD + "Teams and Kills");
+        header.setScore(9);
+
+        int index = 8;
         for (Team team : Bukkit.getScoreboardManager().getMainScoreboard().getTeams()) {
             String teamName = team.getName();
             int kills = teamKills.getOrDefault(teamName, 0);
-            Score score = objective.getScore(team.getColor() + teamName + ": " + kills + " kills");
+            Score score = objective.getScore(team.getColor() + teamName + ": " + ChatColor.WHITE + kills + " kills");
             score.setScore(index--);
         }
+
+        Score separator1 = objective.getScore(ChatColor.GRAY + "---------------");
+        separator1.setScore(7);
 
         long timeRemaining = (plugin.getConfig().getLong("lockDuration") - (System.currentTimeMillis() - plugin.getConfig().getLong("startTime"))) / 1000;
         int hours = (int) (timeRemaining / 3600);
@@ -85,8 +91,16 @@ public class SidebarCommand implements CommandExecutor, TabCompleter {
         int seconds = (int) (timeRemaining % 60);
 
         String timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-        Score timeScore = objective.getScore(ChatColor.YELLOW + "Time until PvP/End: " + timeFormatted);
-        timeScore.setScore(0);
+        Score timeScore = objective.getScore(ChatColor.YELLOW + "PvP/End: " + ChatColor.WHITE + timeFormatted);
+        timeScore.setScore(6);
+
+        Score separator2 = objective.getScore(ChatColor.GRAY + "---------------");
+        separator2.setScore(5);
+
+        Score footer1 = objective.getScore(ChatColor.AQUA + "Server IP:");
+        footer1.setScore(4);
+        Score footer2 = objective.getScore(ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + "mc.mitja.online");
+        footer2.setScore(3);
 
         player.setScoreboard(board);
     }
