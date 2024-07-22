@@ -26,7 +26,7 @@ public class Main extends JavaPlugin implements Listener {
 
         getLogger().info("Webhook URL: " + webhookUrl);
         getServer().getPluginManager().registerEvents(new EventListener(webhookUrl), this);
-        getServer().getPluginManager().registerEvents(new TimeBasedEvents(webhookUrl), this);
+        getServer().getPluginManager().registerEvents(new TimeBasedEvents(this, webhookUrl), this);
         getServer().getPluginManager().registerEvents(this, this);
         getServer().getPluginManager().registerEvents(new PlayerEventListener(), this);
 

@@ -90,16 +90,27 @@ public class SidebarCommand implements CommandExecutor, TabCompleter {
         separator1.setScore(index--);
 
         // PvP/End Time Remaining
-        long timeRemaining = (plugin.getConfig().getLong("lockDuration") - (System.currentTimeMillis() - plugin.getConfig().getLong("startTime"))) / 1000;
-        int hours = (int) (timeRemaining / 3600);
-        int minutes = (int) ((timeRemaining % 3600) / 60);
-        int seconds = (int) (timeRemaining % 60);
+        long currentTime = System.currentTimeMillis();
+        long lockDuration = plugin.getConfig().getLong("lockDuration");
+        long startTime = plugin.getConfig().getLong("startTime");
+        long timeRemaining = (lockDuration - (currentTime - startTime)) / 1000;
 
-        String timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-        Score pvpInfo = objective.getScore(ChatColor.YELLOW + "PvP & End restrictions");
-        pvpInfo.setScore(index--);
-        Score timeScore = objective.getScore(ChatColor.YELLOW + "disabled in: " + ChatColor.WHITE + timeFormatted);
-        timeScore.setScore(index--);
+        if (timeRemaining > 0) {
+            int hours = (int) (timeRemaining / 3600);
+            int minutes = (int) ((timeRemaining % 3600) / 60);
+            int seconds = (int) (timeRemaining % 60);
+
+            String timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, seconds);
+            Score pvpInfo = objective.getScore(ChatColor.YELLOW + "PvP & End restrictions");
+            pvpInfo.setScore(index--);
+            Score timeScore = objective.getScore(ChatColor.YELLOW + "disabled in: " + ChatColor.WHITE + timeFormatted);
+            timeScore.setScore(index--);
+        } else {
+            Score pvpInfo = objective.getScore(ChatColor.YELLOW + "PvP & End restrictions");
+            pvpInfo.setScore(index--);
+            Score timeScore = objective.getScore(ChatColor.YELLOW + "Status: " + ChatColor.WHITE + "UNLOCKED");
+            timeScore.setScore(index--);
+        }
 
         // More Spacing
         Score separator2 = objective.getScore(ChatColor.GRAY + "---------------");
