@@ -1,0 +1,4 @@
+name: NoElytraNetherite
+version: '1.0-SNAPSHOT'
+main: online.mitja.noElytraNetherite.NoElytraNetherite
+api-version: '1.21'
